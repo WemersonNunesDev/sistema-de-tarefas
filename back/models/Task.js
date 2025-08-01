@@ -1,4 +1,4 @@
-const conn = require('../db/conn');
+const dbPromise = require('../db/conn');
 
 class Task {
     constructor(name, status) {
@@ -7,18 +7,16 @@ class Task {
     }
 
     async save() {
-        const task = await conn.db().collection('tasks').insertOne({
+        const db = await dbPromise;
+        return await db.collection('tasks').insertOne({
             name: this.name,
             status: this.status
-        })
-
-        return task;
+        });
     }
 
     static async getTask() {
-        const tasks = await conn.db().collection('tasks').find().toArray()
-
-        return tasks;
+        const db = await dbPromise;
+        return await db.collection('tasks').find().toArray();
     }
 }
 
