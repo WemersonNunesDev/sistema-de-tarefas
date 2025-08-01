@@ -6,17 +6,17 @@ class Task {
         this.status = status
     }
 
-    save() {
-        const task = conn.db().collection('taks').insertOne({
+    async save() {
+        const task = await conn.db().collection('tasks').insertOne({
             name: this.name,
             status: this.status
         })
 
-        return task
+        return task;
     }
 
-    static getTask() {
-        const tasks = conn.db().collection('tasks').find().toArray()
+    static async getTask() {
+        const tasks = await conn.db().collection('tasks').find().toArray()
 
         return tasks;
     }
